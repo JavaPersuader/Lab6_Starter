@@ -82,7 +82,7 @@ function initFormHandler() {
 
   // B3. TODO - Add an event listener for the 'submit' event, which fires when the
   //             submit button is clicked
-     //let submit = document.querySelector('button');
+     
 
      form.addEventListener('submit',(event) => {
           event.preventDefault();
