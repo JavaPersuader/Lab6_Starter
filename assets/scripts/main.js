@@ -24,11 +24,8 @@ function getRecipesFromStorage() {
   // A9. TODO - Complete the functionality as described in this function
   //           header. It is possible in only a single line, but should
   //           be no more than a few lines.
-  if(localStorage.getItem('recipes') == null){
-    return [];
-  }
-   //return JSON.parse(window.localStorage.getItem('recipes'));
-   return JSON.parse(localStorage.getItem('recipes'));
+ 
+   return localStorage.getItem('recipes') == null ? [] : JSON.parse(localStorage.getItem('recipes'));
 
 }
 
@@ -87,16 +84,20 @@ function initFormHandler() {
      form.addEventListener('submit',(event) => {
           event.preventDefault();
           let formData = new FormData(form);
-          let recipeObject = {}
-           let recipeCard = document.createElement('recipe-card');
-          for (const [key,value] of formData) {
+          let recipeObject = {};
+          
+           
+          for (const [key,value] of formData.entries()) {
                recipeObject[key] = value; 
               }
+               let recipeCard = document.createElement('recipe-card');
                recipeCard.data = recipeObject;
-             newRecipes.appendChild(recipeCard);
+             newRecipes.append(recipeCard);
              let getRecipes = getRecipesFromStorage();
-             getRecipes.push(newRecipes);
-             saveRecipesToStorage(newRecipes);
+             //getRecipes.push(newRecipes);
+             getRecipes.push(recipeObject);
+             //saveRecipesToStorage(newRecipes);
+             saveRecipesToStorage(getRecipes);
             } 
      );
 
