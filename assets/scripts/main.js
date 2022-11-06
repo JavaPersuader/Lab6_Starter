@@ -24,8 +24,11 @@ function getRecipesFromStorage() {
   // A9. TODO - Complete the functionality as described in this function
   //           header. It is possible in only a single line, but should
   //           be no more than a few lines.
-        
-   return JSON.parse(window.localStorage.getItem('recipes'));
+  if(localStorage.getItem('recipes') == null){
+    return [];
+  }
+   //return JSON.parse(window.localStorage.getItem('recipes'));
+   return JSON.parse(localStorage.getItem('recipes'));
 
 }
 
@@ -43,7 +46,7 @@ function addRecipesToDocument(recipes) {
   //            create a <recipe-card> element for each one, and populate
   //            each <recipe-card> with that recipe data using element.data = ...
   //            Append each element to <main>
-     for (let i = 0; i < recipes.length;i++){
+     for (let i in recipes){
         let recipeCard = document.createElement('recipe-card');
         recipeCard.data = recipes[i];
         newRecipes.append(recipeCard);
@@ -63,7 +66,7 @@ function saveRecipesToStorage(recipes) {
   //            be no more than a few lines.
 
 
-       Window.localStorage.setItem('recipes',JSON.stringify(recipes));
+       localStorage.setItem('recipes',JSON.stringify(recipes));
 
 }
 
@@ -79,9 +82,9 @@ function initFormHandler() {
 
   // B3. TODO - Add an event listener for the 'submit' event, which fires when the
   //             submit button is clicked
-     let submit = document.querySelector('button');
+     //let submit = document.querySelector('button');
 
-     submit.addEventListener('click',(event) => {
+     form.addEventListener('submit',(event) => {
           event.preventDefault();
           let formData = new FormData(form);
           let recipeObject = {}
@@ -90,9 +93,9 @@ function initFormHandler() {
                recipeObject[key] = value; 
               }
                recipeCard.data = recipeObject;
-             newRecipes.append(recipeCard);
-
-             newRecipes.push(getRecipesFromStorage());
+             newRecipes.appendChild(recipeCard);
+             let getRecipes = getRecipesFromStorage();
+             getRecipes.push(newRecipes);
              saveRecipesToStorage(newRecipes);
             } 
      );
